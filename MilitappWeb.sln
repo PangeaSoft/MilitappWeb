@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilitappWeb.Web", "MilitappWeb.Web\MilitappWeb.Web.csproj", "{EA2E162B-12CF-4DC0-B098-98E44218AC83}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00", "00", "{96E1DFEE-1873-4988-AF7F-8C24A715AE96}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01", "01", "{70B87B95-0038-4CA9-A19D-E0BDFBD6C4F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilitappWeb.Business", "MilitappWeb.Business\MilitappWeb.Business.csproj", "{B5B65222-FB45-4AE3-8806-412688CE4DDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02", "02", "{40A68770-4B76-4750-A4CA-4044AC462EC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilitappWeb.Interface", "MilitappWeb.Interface\MilitappWeb.Interface.csproj", "{17599991-60BF-4370-B88C-31A6C8FA01FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "30", "30", "{CF08741B-4F36-4126-958A-21A5AC1237C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilitappWeb.Repository", "MilitappWeb.Repository\MilitappWeb.Repository.csproj", "{643CC08A-7154-4D1E-8F5B-D52B6CCEF63B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99", "99", "{19609C10-6925-4CC6-91D7-259507C3C59F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilitappWeb.Entities", "MilitappWeb.Entities\MilitappWeb.Entities.csproj", "{731A3437-45C7-4613-9E3B-6C5B5E7FFCC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA2E162B-12CF-4DC0-B098-98E44218AC83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA2E162B-12CF-4DC0-B098-98E44218AC83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA2E162B-12CF-4DC0-B098-98E44218AC83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA2E162B-12CF-4DC0-B098-98E44218AC83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5B65222-FB45-4AE3-8806-412688CE4DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B65222-FB45-4AE3-8806-412688CE4DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B65222-FB45-4AE3-8806-412688CE4DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B65222-FB45-4AE3-8806-412688CE4DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17599991-60BF-4370-B88C-31A6C8FA01FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17599991-60BF-4370-B88C-31A6C8FA01FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17599991-60BF-4370-B88C-31A6C8FA01FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17599991-60BF-4370-B88C-31A6C8FA01FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{643CC08A-7154-4D1E-8F5B-D52B6CCEF63B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{643CC08A-7154-4D1E-8F5B-D52B6CCEF63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{643CC08A-7154-4D1E-8F5B-D52B6CCEF63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{643CC08A-7154-4D1E-8F5B-D52B6CCEF63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{731A3437-45C7-4613-9E3B-6C5B5E7FFCC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{731A3437-45C7-4613-9E3B-6C5B5E7FFCC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{731A3437-45C7-4613-9E3B-6C5B5E7FFCC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{731A3437-45C7-4613-9E3B-6C5B5E7FFCC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EA2E162B-12CF-4DC0-B098-98E44218AC83} = {96E1DFEE-1873-4988-AF7F-8C24A715AE96}
+		{B5B65222-FB45-4AE3-8806-412688CE4DDA} = {70B87B95-0038-4CA9-A19D-E0BDFBD6C4F1}
+		{17599991-60BF-4370-B88C-31A6C8FA01FA} = {40A68770-4B76-4750-A4CA-4044AC462EC7}
+		{643CC08A-7154-4D1E-8F5B-D52B6CCEF63B} = {CF08741B-4F36-4126-958A-21A5AC1237C6}
+		{731A3437-45C7-4613-9E3B-6C5B5E7FFCC0} = {19609C10-6925-4CC6-91D7-259507C3C59F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,198 @@
+﻿@using System.Web.Optimization
+@using MilitappWeb.Web.Models
+
+@model ResultadoElectoralModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    @*<title>@ViewBag.Title</title>*@
+    <title>Titulo</title>
+
+    @Styles.Render("~/Mdb/css/font-awesome.min.css")
+    @Styles.Render("~/Mdb/css/bootstrap.min.css")
+    @Styles.Render("~/Mdb/css/mdb.min.css")
+    @Styles.Render("~/Mdb/css/style.css")
+
+</head>
+
+<body onload="CargaControles();">
+
+    @*Install-Package Microsoft.AspNet.Web.Optimization*@
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h1>Elecciones Legislativas 2017</h1>
+                <br />
+
+                <!-- Tijereta -->
+                <canvas id="pieChart"></canvas>
+                <br />
+                <br />
+
+                <!--Grafico de barras-->
+                <canvas id="barChart"></canvas>
+                <br />
+                <br />
+
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+
+        <!--Tabla-->
+        <div class="input-group">
+            <span class="input-group-addon">Buscar</span>
+
+            <input id="filter" type="text" class="form-control" placeholder="Escribir acá...">
+        </div>
+        <div style="overflow: auto">
+            <table id="tablaPlanillas" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._1)</th>                        
+                        <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._3)</th>                        
+                        <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._5)</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">                    
+                    <tr>
+                        <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._1)</td>
+                        <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._3)</td>
+                        <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._5)</td>
+                    </tr>                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    @*<body>*@
+
+    <!-- Start your project here-->
+    <!--Card-->
+    @*<div class="card m-5" style="width: 22rem;">
+
+            <!--Card image-->
+            <div class="view overlay hm-white-slight">
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%287%29.jpg" class="img-fluid" alt="">
+                <a href="#">
+                    <div class="mask"></div>
+                </a>
+            </div>
+
+            <!--Card content-->
+            <div class="card-body">
+                <!--Title-->
+                <h4 class="card-title">Card title</h4>
+                <!--Text-->
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Button</a>
+            </div>
+
+        </div>*@
+    <!--/.Card-->
+    <!-- /Start your project here-->
+    <!-- SCRIPTS -->
+    @Scripts.Render("~/Mdb/js/jquery")
+    @Scripts.Render("~/Mdb/js/popper")
+    @Scripts.Render("~/Mdb/js/bootstrap")
+    @Scripts.Render("~/Mdb/js/mdbMin")
+
+
+
+    <script type="text/javascript">
+        function CargaControles() {
+            graficoBarras();
+            tijereta();
+        }
+
+        function tijereta() {
+            var ctxP = document.getElementById("pieChart").getContext('2d');
+            var myPieChart = new Chart(ctxP, {
+                type: 'pie',
+                data: {
+                    labels: ["Red", "Green", "Yellow", "Grey", "Dark Grey"],
+                    datasets: [
+                        {
+                            data: [300, 50, 100, 40, 120],
+                            backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+
+        function graficoBarras() {
+            var ctxB = document.getElementById("barChart").getContext('2d');
+            var myBarChart = new Chart(ctxB, {
+                type: 'bar',
+                data: {
+                    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                optionss: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        //Funcion para el filtrado
+        $(document).ready(function () {
+
+            (function ($) {
+
+                $('#filter').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+            }(jQuery));
+
+        })
+
+    </script>
+</body>
+
+</html>

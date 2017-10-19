@@ -1,0 +1,292 @@
+﻿@using System.Web.Optimization
+@using MilitappWeb.Web.Models
+
+@model ResultadoElectoralModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    @*<title>@ViewBag.Title</title>*@
+    <title>Titulo</title>
+
+    @Styles.Render("~/Mdb/css/font-awesome.min.css")
+    @Styles.Render("~/Mdb/css/bootstrap.min.css")
+    @Styles.Render("~/Mdb/css/mdb.min.css")
+    @Styles.Render("~/Mdb/css/style.css")
+
+</head>
+
+<body onload="CargaControles();">
+
+    @*Install-Package Microsoft.AspNet.Web.Optimization*@
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h1>Elecciones Legislativas 2017</h1>
+                <br />
+
+                <!--Grafico de barras-->
+                <canvas id="ResultadoElectoral"></canvas>
+                <br />
+                <br />
+
+                <!--Grafico de barras-->
+                <canvas id="IngresoDiputados"></canvas>
+                <br />
+                <br />
+
+                <!--Grafico de barras-->
+                <canvas id="IngresoLegisladores"></canvas>
+                <br />
+                <br />
+
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+
+        <!--Tabla-->
+        @*
+    <div class="input-group">
+        <span class="input-group-addon">Buscar</span>
+
+        <input id="filter" type="text" class="form-control" placeholder="Escribir acá...">
+    </div>
+    <div style="overflow: auto">
+        <table id="tablaPlanillas" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._1)</th>
+                    <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._3)</th>
+                    <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._5)</th>
+                </tr>
+            </thead>
+            <tbody class="searchable">
+                <tr>
+                    <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._1)</td>
+                    <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._3)</td>
+                    <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._5)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    *@
+
+    @*<body>*@
+
+    <!-- Start your project here-->
+    <!--Card-->
+    @*<div class="card m-5" style="width: 22rem;">
+
+            <!--Card image-->
+            <div class="view overlay hm-white-slight">
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%287%29.jpg" class="img-fluid" alt="">
+                <a href="#">
+                    <div class="mask"></div>
+                </a>
+            </div>
+
+            <!--Card content-->
+            <div class="card-body">
+                <!--Title-->
+                <h4 class="card-title">Card title</h4>
+                <!--Text-->
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Button</a>
+            </div>
+
+        </div>*@
+    <!--/.Card-->
+    <!-- /Start your project here-->
+    <!-- SCRIPTS -->
+    @Scripts.Render("~/Mdb/js/jquery")
+    @Scripts.Render("~/Mdb/js/popper")
+    @Scripts.Render("~/Mdb/js/bootstrap")
+    @Scripts.Render("~/Mdb/js/mdbMin")
+
+
+
+    <script type="text/javascript">
+
+        function callDatosResultadoElectoral(obj) {            
+            var strMethodUrl = '@Url.Action("armarDatosGraficoBarras", "ResultadoElectoral")'
+            $.getJSON(strMethodUrl, function (json) {                
+                graficoBarras(json);
+            });            
+        }
+
+        
+        function callDatosIngresoDiputados(obj) {
+            var strMethodUrl = '@Url.Action("armarDatosIngresoDiputados", "ResultadoElectoral")'
+            $.getJSON(strMethodUrl, function (json) {
+                graficoIngresoDiputados(json);
+            });
+        }
+
+        function CallDatosIngresoLesgiladores(obj) {
+            var strMethodUrl = '@Url.Action("armarDatosIngresoLegisladores", "ResultadoElectoral")'
+            $.getJSON(strMethodUrl, function (json) {
+                graficoIngresoLesgiladores(json);
+            });
+        }
+               
+        function CargaControles() {
+            var obj;
+            callDatosResultadoElectoral(obj);
+            callDatosIngresoDiputados(obj);
+            CallDatosIngresoLesgiladores(obj);                             
+        }
+
+        function graficoBarras(obj) {
+            var ctxB = document.getElementById("ResultadoElectoral").getContext('2d');
+            var myBarChart = new Chart(ctxB, {
+                type: 'bar',
+                data: {
+                    labels: ["DIP_VM", "LEG_VM", "DIP_UP", "LEG_UP", "DIP_Ev", "LEG_Ev", "DIP_1P", "LEG_1P"],
+                    datasets: [{
+                        label: '% de Votos',
+                        data: obj,                        
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                scaleStartValue : 0,
+                optionss: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        
+
+        function graficoIngresoLesgiladores(obj) {
+            var ctxB = document.getElementById("IngresoLegisladores").getContext('2d');
+            var myBarChart = new Chart(ctxB, {
+                type: 'bar',
+                data: {
+                    labels: ["LEG_VM", "LEG_UP", "LEG_Ev", "LEG_1P"],
+                    datasets: [{
+                        label: 'Ingreso de LEGISLADORES',
+                        data: obj,                                                
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                scaleStartValue : 0,
+                optionss: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        
+        
+        function graficoIngresoDiputados(obj) {
+            var ctxBB = document.getElementById("IngresoDiputados").getContext('2d');
+            var myBarChart = new Chart(ctxBB, {
+                type: 'bar',
+                data: {
+                    labels: ["DIP_VM", "DIP_UP", "DIP_Ev", "DIP_1P"],
+                    datasets: [{
+                        label: 'Ingreso de DIPUTADOS',
+                        data: obj,                                                
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                scaleStartValue: 0,
+                options: {
+                    scales: {
+                        includeZero: true,
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+
+        //Funcion para el filtrado
+        $(document).ready(function () {
+
+            (function ($) {
+
+                $('#filter').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+            }(jQuery));
+
+        })
+
+    </script>
+</body>
+
+</html>
