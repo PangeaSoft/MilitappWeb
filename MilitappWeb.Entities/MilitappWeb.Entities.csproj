@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +50,26 @@
     <Compile Include="PorcentajeResultadoDiputadosEntity.cs" />
     <Compile Include="PorcentajeResultadoLegisladoresEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Ent_LegisladoresGanadores.Designer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ent_LegisladoresGanadores.Designer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Ent_TbCandidatoResource.Designer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ent_TbCandidatoResource.Designer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Ent_TbListaEntity.Designer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ent_TbListaEntity.Designer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Ent_VotosPorMesaEntity.Designer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ent_VotosPorMesaEntity.Designer.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResultadoElectoralEntity.cs" />
     <Compile Include="TbCandidatoEntity.cs" />
     <Compile Include="TbListaCandidatoCargoEntity.cs" />
@@ -56,6 +77,25 @@
     <Compile Include="TbListaEntity.cs" />
     <Compile Include="TbplanillaCargoEntity.cs" />
     <Compile Include="TbresultadoEntity.cs" />
+    <Compile Include="VotosPorMesaEntity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ent_LegisladoresGanadores.Designer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ent_LegisladoresGanadores.Designer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Ent_TbCandidatoResource.Designer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ent_TbCandidatoResource.Designer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Ent_TbListaEntity.Designer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ent_TbListaEntity.Designer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Ent_VotosPorMesaEntity.Designer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ent_VotosPorMesaEntity.Designer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

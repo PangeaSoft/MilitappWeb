@@ -23,8 +23,8 @@ namespace MilitappWeb.Repository
 
         public object GetList()
         {
-            string url = ConfigurationManager.AppSettings["NombreServidor"].ToString() + ConfigurationManager.AppSettings["UrlObtenerResultadosParciales"].ToString(); 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //string url = ConfigurationManager.AppSettings["NombreServidor"].ToString() + ConfigurationManager.AppSettings["UrlObtenerResultadosParciales"].ToString(); 
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://sanmartinserver.eastus.cloudapp.azure.com/MilitappRest/api/Resultado/ObtenerResultadosParciales");
             request.Method = "GET";
             request.Accept = "application/json";
             try

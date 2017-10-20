@@ -7,6 +7,8 @@ namespace MilitappWeb.Entities
 {
     public class PorcentajeResultadoDiputadosEntity
     {
+     
+        
         public int lca_id { get; set; }
         public int lis_id { get; set; }
         public int car_id { get; set; }

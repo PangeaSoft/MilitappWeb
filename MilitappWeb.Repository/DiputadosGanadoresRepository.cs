@@ -10,20 +10,20 @@ using System.Configuration;
 
 namespace MilitappWeb.Repository
 {
-    public class LegisladoresGanadoresRepository : IRepository<LegisladoresGanadoresEntity>
+    public class DiputadosGanadoresRepository : IRepository<LegisladoresGanadoresEntity>
     {
-        private static LegisladoresGanadoresRepository instancia = null;
-        public static LegisladoresGanadoresRepository GetInstancia()
+        private static DiputadosGanadoresRepository instancia = null;
+        public static DiputadosGanadoresRepository GetInstancia()
         {
             if (instancia == null)
-                return new LegisladoresGanadoresRepository();
+                return new DiputadosGanadoresRepository();
             return instancia;
         }
 
         public object GetList()
         {
-            string url = ConfigurationManager.AppSettings["NombreServidor"] + ConfigurationManager.AppSettings["UrlObtenerDiputadosGanadores"];
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //string url = ConfigurationManager.AppSettings["NombreServidor"] + ConfigurationManager.AppSettings["UrlObtenerDiputadosGanadores"];
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://sanmartinserver.eastus.cloudapp.azure.com/MilitappRest/api/Resultado/ObtenerDiputadosGanadores");
             request.Method = "GET";
             request.Accept = "application/json";
             try

@@ -8,17 +8,18 @@ using System.Text;
 
 namespace MilitappWeb.Business
 {
-    public class LegisladoresGanadoresBusiness
+    public class DiputadosGanadoresBusiness
     {
-        private LegisladoresGanadoresRepository legisladoresGanadoresRepository = null;
-        public LegisladoresGanadoresBusiness()
+        private DiputadosGanadoresRepository legisladoresGanadoresRepository = null;
+        public DiputadosGanadoresBusiness()
         {
-            legisladoresGanadoresRepository = LegisladoresGanadoresRepository.GetInstancia();
+            legisladoresGanadoresRepository = DiputadosGanadoresRepository.GetInstancia();
         }
 
         public object GetList()
         {
             return legisladoresGanadoresRepository.GetList();                        
         }
+        
     }
 }

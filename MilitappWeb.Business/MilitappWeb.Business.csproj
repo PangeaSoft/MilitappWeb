@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LegisladoresGanadoresBusiness.cs" />
+    <Compile Include="DiputadosGanadoresBusiness.cs" />
     <Compile Include="LegisladorGanadoresBusiness.cs" />
     <Compile Include="PersonaBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
