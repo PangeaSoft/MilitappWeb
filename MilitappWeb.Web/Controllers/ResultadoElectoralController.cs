@@ -16,14 +16,17 @@ namespace MilitappWeb.Web.Controllers
 {
     public class ResultadoElectoralController : Controller
     {
-
         public ActionResult Index()
         {
-            ResultadoElectoralBusiness resultadoElectoralBusiness = new ResultadoElectoralBusiness();            
-            ResultadoElectoralModel modelo = new ResultadoElectoralModel();                        
-            modelo.ResultadoElectoral = (ResultadoElectoralEntity)JsonConvert.DeserializeObject(resultadoElectoralBusiness.GetList().ToString(), typeof(ResultadoElectoralEntity));                                    
-            return View(modelo);
-            
+            ResultadoElectoralBusiness resultadoElectoralBusiness = new ResultadoElectoralBusiness();
+            DiputadosGanadoresBusiness diputadosGanadoresBusiness = new DiputadosGanadoresBusiness();
+            LegisladorGanadoresBusiness legisladorGanadoresBusiness = new LegisladorGanadoresBusiness();
+            ResultadosGeneralesDiscriminadoModel model = new ResultadosGeneralesDiscriminadoModel();            
+            model.ResultadoElectoral = (ResultadoElectoralEntity)JsonConvert.DeserializeObject(resultadoElectoralBusiness.GetList().ToString(), typeof(ResultadoElectoralEntity));
+            model.Diputados = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(diputadosGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));
+            model.Legisladores = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(legisladorGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));
+            model.ListaVotosPorMesa = resultadoElectoralBusiness.GetListVotosPorMesa(model.ResultadoElectoral, model.Diputados, model.Legisladores);
+            return View(model);            
         }
 
 
@@ -57,9 +60,11 @@ namespace MilitappWeb.Web.Controllers
             return res;
         }
 
+                
+
         public JsonResult armarDatosIngresoDiputados()
         {
-            LegisladoresGanadoresBusiness diputadosGanadoresBusiness = new LegisladoresGanadoresBusiness();
+            DiputadosGanadoresBusiness diputadosGanadoresBusiness = new DiputadosGanadoresBusiness();
             DiputadosGanadoresModel obj = new DiputadosGanadoresModel();
             obj.ListaDiputadosGanadores = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(diputadosGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));
             decimal[] datosBarras = armarDatosIngresoDiputados(obj.ListaDiputadosGanadores);

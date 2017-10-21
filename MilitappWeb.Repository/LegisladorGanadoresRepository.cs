@@ -21,9 +21,9 @@ namespace MilitappWeb.Repository
         }
 
         public object GetList()
-        {            
-            string url = ConfigurationManager.AppSettings["NombreServidor"] + ConfigurationManager.AppSettings["UrlObtenerLegisladoresGanadores"];
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        {               
+            //string url = ConfigurationManager.AppSettings["NombreServidor"] + ConfigurationManager.AppSettings["UrlObtenerLegisladoresGanadores"];
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://sanmartinserver.eastus.cloudapp.azure.com/MilitappRest/api/Resultado/ObtenerLegisladoresGanadores");
             request.Method = "GET";
             request.Accept = "application/json";
             try

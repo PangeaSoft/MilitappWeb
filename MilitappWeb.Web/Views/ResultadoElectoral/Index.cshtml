@@ -1,7 +1,7 @@
 ﻿@using System.Web.Optimization
 @using MilitappWeb.Web.Models
 
-@model ResultadoElectoralModel
+@model ResultadosGeneralesDiscriminadoModel
 
 <!DOCTYPE html>
 <html>
@@ -52,32 +52,99 @@
 
 
         <!--Tabla-->
-        @*
-    <div class="input-group">
-        <span class="input-group-addon">Buscar</span>
+        <div class="input-group">
 
-        <input id="filter" type="text" class="form-control" placeholder="Escribir acá...">
-    </div>
-    <div style="overflow: auto">
-        <table id="tablaPlanillas" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._1)</th>
-                    <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._3)</th>
-                    <th>@Html.DisplayNameFor(m => m.ResultadoElectoral.CantidadVotosDiputados._5)</th>
-                </tr>
-            </thead>
-            <tbody class="searchable">
-                <tr>
-                    <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._1)</td>
-                    <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._3)</td>
-                    <td>@Html.DisplayFor(m => m.ResultadoElectoral.CantidadVotosDiputados._5)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    </div>
-    *@
+            <span class="input-group-addon">Buscar</span>
+
+            <input id="filter" type="text" class="form-control" placeholder="Escribir acá...">
+        </div>
+        <div style="overflow: auto">
+            <table id="tablaDiputados" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.lca_id)</th>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.can_id)</th>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_orden)</th>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_votos_correspondientes)</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    @foreach (var obj in Model.Diputados)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => obj.tbcandidato.can_nombre)</td>
+                            <td>@Html.DisplayFor(m => obj.tbcandidato.can_apellido)</td>
+                            <td>@Html.DisplayFor(m => obj.tblistacargo.tblista.lis_descripcion)</td>
+                            <td>@Html.DisplayFor(m => obj.lcc_votos_correspondientes)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!--Tabla-->
+        <div class="input-group">
+
+            <span class="input-group-addon">Buscar</span>
+
+            <input id="filter2" type="text" class="form-control" placeholder="Escribir acá...">
+        </div>
+        <div style="overflow: auto">
+            <table id="tablaLegisladores" class="table table-hover">                
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.lca_id)</th>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.can_id)</th>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_orden)</th>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_votos_correspondientes)</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    @foreach (var obj in Model.Legisladores)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => obj.tbcandidato.can_nombre)</td>
+                            <td>@Html.DisplayFor(m => obj.tbcandidato.can_apellido)</td>
+                            <td>@Html.DisplayFor(m => obj.tblistacargo.tblista.lis_descripcion)</td>
+                            <td>@Html.DisplayFor(m => obj.lcc_votos_correspondientes)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <!--Tabla-->
+        <div class="input-group">
+
+            <span class="input-group-addon">Buscar</span>
+
+            <input id="filter3" type="text" class="form-control" placeholder="Escribir acá...">
+        </div>
+        <div style="overflow: auto">
+            <table id="tablaVotosPorMesa" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.votosPorMesa.mes_id)</th>
+                        <th>@Html.DisplayNameFor(m => m.votosPorMesa.lca_id)</th>
+                        <th>@Html.DisplayNameFor(m => m.votosPorMesa.pca_cantidad_votos)</th>                        
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    @foreach (var obj in Model.ListaVotosPorMesa)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => obj.mes_id)</td>
+                            <td>@Html.DisplayFor(m => obj.nombreLista)</td>
+                            <td>@Html.DisplayFor(m => obj.pca_cantidad_votos)</td>                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+    </div> 
 
     @*<body>*@
 
@@ -114,6 +181,8 @@
 
 
     <script type="text/javascript">
+
+
 
         function callDatosResultadoElectoral(obj) {            
             var strMethodUrl = '@Url.Action("armarDatosGraficoBarras", "ResultadoElectoral")'
@@ -192,7 +261,7 @@
 
         function graficoIngresoLesgiladores(obj) {
             var ctxB = document.getElementById("IngresoLegisladores").getContext('2d');
-            var myBarChart = new Chart(ctxB, {
+            var myBarChart1 = new Chart(ctxB, {
                 type: 'bar',
                 data: {
                     labels: ["LEG_VM", "LEG_UP", "LEG_Ev", "LEG_1P"],
@@ -215,7 +284,7 @@
                     }]
                 },
                 scaleStartValue : 0,
-                optionss: {
+                options: {
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -273,6 +342,16 @@
             (function ($) {
 
                 $('#filter').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+                $('#filter2').keyup(function () {
 
                     var rex = new RegExp($(this).val(), 'i');
                     $('.searchable tr').hide();

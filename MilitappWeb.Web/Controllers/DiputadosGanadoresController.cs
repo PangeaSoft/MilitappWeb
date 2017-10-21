@@ -19,7 +19,7 @@ namespace MilitappWeb.Web.Controllers
 
         public ActionResult Index()
         {
-            LegisladoresGanadoresBusiness diputadosGanadoresBusiness = new LegisladoresGanadoresBusiness();            
+            DiputadosGanadoresBusiness diputadosGanadoresBusiness = new DiputadosGanadoresBusiness();            
             DiputadosGanadoresModel model = new DiputadosGanadoresModel();
             model.ListaDiputadosGanadores = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(diputadosGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));            
             return View(model);

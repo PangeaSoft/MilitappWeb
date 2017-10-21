@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LegisladoresGanadoresRepository.cs" />
+    <Compile Include="DiputadosGanadoresRepository.cs" />
     <Compile Include="PersonaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultadoElectoralRepository.cs" />

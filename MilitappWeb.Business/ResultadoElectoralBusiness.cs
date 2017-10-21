@@ -53,5 +53,31 @@ namespace MilitappWeb.Business
 
             return dontToArray(datosLegisladores, datosDiputados);
         }
+
+        public List<VotosPorMesaEntity> GetListVotosPorMesa(ResultadoElectoralEntity resultados, List<LegisladoresGanadoresEntity> diputados, List<LegisladoresGanadoresEntity> legisladores)
+        {
+            List<VotosPorMesaEntity> list = new List<VotosPorMesaEntity>();
+            foreach (PlanillaEntity elem in resultados.ListaPlanillas)
+            {                
+                int mes_id = elem.mes_id;
+                foreach(TbresultadoEntity elem2 in elem.tbresultado){
+                    VotosPorMesaEntity obj = new VotosPorMesaEntity();
+                    obj.mes_id = mes_id;
+                    obj.lca_id = elem2.lca_id;                    
+                    obj.pca_cantidad_votos = elem2.res_cantidad_votos;
+                    list.Add(obj);
+                }                
+            }
+            var resul2 = legisladores.Select(x => new { x.tblistacargo.tblista.lis_descripcion, x.tblistacargo.lca_id }).Distinct().ToList();
+            var resul = diputados.Select(x => new { x.tblistacargo.tblista.lis_descripcion, x.tblistacargo.lca_id }).Distinct().ToList();
+            foreach (VotosPorMesaEntity elem in list)
+            {
+                foreach (var elem2 in resul2.Where(w => w.lca_id == elem.lca_id))                
+                    elem.nombreLista = elem2.lis_descripcion + " - Legisladores";                
+                foreach (var elem2 in resul.Where(w => w.lca_id == elem.lca_id)) 
+                    elem.nombreLista = elem2.lis_descripcion + " - Diputados";                
+            }
+            return list;
+        }        
     }
 }
