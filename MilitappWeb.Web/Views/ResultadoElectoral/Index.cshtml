@@ -252,14 +252,22 @@
         function GetDatosComunaPorMesa(obj) {
             var strMethodUrl = '@Url.Action("GetDatosComunaPorMesaBarra", "ResultadoElectoral")'
             $.getJSON(strMethodUrl, function (json) {
-                graficoCantidadMesasAbiertasComuna(json);
+                var totales = 0;
+                for (var i = 0; i < json.length; i++) {                    
+                    totales = totales + json[i];
+                }                
+                graficoCantidadMesasAbiertasComuna(json, totales);
             });
         }
 
         function GetMesasAbiertas(obj) {
             var strMethodUrl = '@Url.Action("GetMesasAbiertas", "ResultadoElectoral")'
             $.getJSON(strMethodUrl, function (json) {
-                graficoBarrasMesasAbiertas(json);
+                var totales = 0;
+                for (var i = 0; i < json.length; i++) {
+                    totales = totales + json[i];
+                }
+                graficoBarrasMesasAbiertas(json, totales);
             });
         }
 
@@ -287,14 +295,14 @@
             GetMesasAbiertas(obj);
         }
 
-        function graficoBarrasMesasAbiertas(obj) {
+        function graficoBarrasMesasAbiertas(obj, totales) {
             var ctxB = document.getElementById("MesasAbiertas").getContext('2d');
             var myBarChart12 = new Chart(ctxB, {
                 type: 'bar',
                 data: {
                     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
                     datasets: [{
-                        label: 'Mesas abiertas por comuna',
+                        label: 'Mesas abiertas por comuna: ' + totales,
                         data: obj,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
@@ -394,14 +402,14 @@
 
         
 
-        function graficoCantidadMesasAbiertasComuna(obj) {
+        function graficoCantidadMesasAbiertasComuna(obj, total) {
             var ctxB = document.getElementById("MesasPorComuna").getContext('2d');
             var myBarChart2 = new Chart(ctxB, {
-                type: 'bar',
+                type: 'bar',                
                 data: {
                     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
                     datasets: [{
-                        label: 'Datos enviados por comuna',
+                        label: 'Resultados enviados por comuna: '+ total,
                         data: obj,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
