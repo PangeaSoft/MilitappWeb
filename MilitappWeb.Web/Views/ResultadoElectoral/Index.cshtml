@@ -282,8 +282,16 @@
         
         function callDatosIngresoDiputados(obj) {
             var strMethodUrl = '@Url.Action("armarDatosIngresoDiputados", "ResultadoElectoral")'
-            $.getJSON(strMethodUrl, function (json) {
-                graficoIngresoDiputados(json);
+            $.getJSON(strMethodUrl, function (json) {                
+                if (json[0] == 0) {
+                    for (var i = 0; i <= 3; i++) {
+                        json[i] = 0;                        
+                    }
+                    graficoIngresoDiputados(json);
+                }
+                else {
+                    graficoIngresoDiputados(json);
+                }
             });
         }
                

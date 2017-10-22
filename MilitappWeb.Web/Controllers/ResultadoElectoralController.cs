@@ -69,6 +69,17 @@ namespace MilitappWeb.Web.Controllers
                 ResultadoElectoralModel obj = new ResultadoElectoralModel();
                 obj.ResultadoElectoral = (ResultadoElectoralEntity)JsonConvert.DeserializeObject(resultadoElectoralBusiness.GetList().ToString(), typeof(ResultadoElectoralEntity));
                 Double[] datosBarras = resultadoElectoralBusiness.datosGraficoBarra(obj.ResultadoElectoral);
+                Double sumaDeValores = 0;
+                for (int i = 0; i < datosBarras.Count(); i++)
+                {
+                    if (Double.IsNaN(datosBarras[i]))
+                        sumaDeValores = sumaDeValores + 1;
+                }
+                if (sumaDeValores == datosBarras.Count())
+                {
+                    for (int i = 0; i < datosBarras.Count(); i++)
+                        datosBarras[i] = 0;
+                }
                 return Json(datosBarras, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -100,10 +111,15 @@ namespace MilitappWeb.Web.Controllers
             decimal[] res = new decimal[4];
             foreach (LegisladoresGanadoresEntity elem in obj)
             {
+                if (elem.lcc_votos_correspondientes == 0)
+                {
+                    for (int i = 0; i <= 3; i++ )
+                        res[i] = 0;
+                    break;
+                }
                 res[elem.tblistacargo.lis_id - 1] = res[elem.tblistacargo.lis_id - 1] + 1;
                 resultados.Add(elem.lcc_votos_correspondientes);
-            }
-            //return resultados.ToArray();
+            }            
             return res;
         }
 
