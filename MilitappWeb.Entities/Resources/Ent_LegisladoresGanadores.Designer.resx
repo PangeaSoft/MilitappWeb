@@ -120,6 +120,9 @@
   <data name="FirstName" xml:space="preserve">
     <value>NOMBRE</value>
   </data>
+  <data name="Indice" xml:space="preserve">
+    <value>#</value>
+  </data>
   <data name="LastName" xml:space="preserve">
     <value>APELLIDO</value>
   </data>

@@ -42,6 +42,7 @@
     <Compile Include="DiputadosGanadoresBusiness.cs" />
     <Compile Include="LegisladorGanadoresBusiness.cs" />
     <Compile Include="PersonaBusiness.cs" />
+    <Compile Include="PlanillasAbiertasCerradasBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultadoElectoralBusiness.cs" />
   </ItemGroup>

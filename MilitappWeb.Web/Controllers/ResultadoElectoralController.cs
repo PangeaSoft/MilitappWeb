@@ -19,6 +19,7 @@ namespace MilitappWeb.Web.Controllers
         public ActionResult Index()
         {
             ResultadoElectoralBusiness resultadoElectoralBusiness = new ResultadoElectoralBusiness();
+            PlanillasAbiertasCerradasBusiness planillasAbiertasCerradasBusiness = new PlanillasAbiertasCerradasBusiness();
             DiputadosGanadoresBusiness diputadosGanadoresBusiness = new DiputadosGanadoresBusiness();
             LegisladorGanadoresBusiness legisladorGanadoresBusiness = new LegisladorGanadoresBusiness();
             ResultadosGeneralesDiscriminadoModel model = new ResultadosGeneralesDiscriminadoModel();            
@@ -26,11 +27,40 @@ namespace MilitappWeb.Web.Controllers
             model.Diputados = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(diputadosGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));
             model.Legisladores = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(legisladorGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));
             model.ListaVotosPorMesa = resultadoElectoralBusiness.GetListVotosPorMesa(model.ResultadoElectoral, model.Diputados, model.Legisladores);
+            model.MesasAbiertasCerradas = (List<PlanillasAbiertasCerradasEntity>)JsonConvert.DeserializeObject(planillasAbiertasCerradasBusiness.GetList().ToString(), typeof(List<PlanillasAbiertasCerradasEntity>));            
+            SetIndiceMesas(model.MesasAbiertasCerradas, model.MesasAbiertasCerradas.Count);
+            SetIndicesFuncionarios(model.Legisladores, 30);
+            SetIndicesFuncionarios(model.Diputados, 13);
             return View(model);            
         }
 
+        private void SetIndicesFuncionarios(List<LegisladoresGanadoresEntity> list, int tope)
+        {
+            int indice = 1;
+            foreach (LegisladoresGanadoresEntity elem in list)
+            {
+                elem.indice = indice;
+                indice++;
+            }
+        }
+        private void SetIndiceMesas(List<PlanillasAbiertasCerradasEntity> list, int tope)
+        {
+            int indice = 1;
+            foreach (PlanillasAbiertasCerradasEntity elem in list){
+                elem.indice = indice;
+                indice++;
+            }                                    
+        }
 
-                        
+        public JsonResult GetMesasAbiertas()
+        {
+            PlanillasAbiertasCerradasBusiness planillasAbiertasCerradasBusiness = new PlanillasAbiertasCerradasBusiness();
+            PlanillasAbiertasCerradasModel model = new PlanillasAbiertasCerradasModel();
+            model.ListPlanillasAbiertasCerradas = (List<PlanillasAbiertasCerradasEntity>)JsonConvert.DeserializeObject(planillasAbiertasCerradasBusiness.GetList().ToString(), typeof(List<PlanillasAbiertasCerradasEntity>));
+            int[] datosBarras = planillasAbiertasCerradasBusiness.datosGraficoBarra(model.ListPlanillasAbiertasCerradas);
+            return Json(datosBarras, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult armarDatosGraficoBarras()
         {
             try
@@ -48,7 +78,7 @@ namespace MilitappWeb.Web.Controllers
         }
 
 
-        public JsonResult GetDatosComunaPorMesa()
+        public JsonResult GetDatosComunaPorMesaBarra()
         {
             try
             {

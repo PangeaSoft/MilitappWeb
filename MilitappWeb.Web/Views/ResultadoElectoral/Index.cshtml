@@ -11,7 +11,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     @*<title>@ViewBag.Title</title>*@
-    <title>Titulo</title>
+    <title>Elecciones Legislativas 2017</title>
 
     @Styles.Render("~/Mdb/css/font-awesome.min.css")
     @Styles.Render("~/Mdb/css/bootstrap.min.css")
@@ -46,6 +46,11 @@
                 <br />
                 <br />
 
+                <!--Grafico de barras-->
+                <canvas id="MesasAbiertas"></canvas>
+                <br />
+                <br />
+
                 
             </div>
             <div class="col-md-3"></div>
@@ -63,6 +68,7 @@
             <table id="tablaDiputados" class="table table-hover">
                 <thead>
                     <tr>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.indice)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lca_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.can_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_orden)</th>
@@ -73,6 +79,7 @@
                     @foreach (var obj in Model.Diputados)
                     {
                         <tr>
+                            <td>@Html.DisplayFor(m => obj.indice)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_nombre)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_apellido)</td>
                             <td>@Html.DisplayFor(m => obj.tblistacargo.tblista.lis_descripcion)</td>
@@ -89,12 +96,13 @@
 
             <span class="input-group-addon">Buscar</span>
 
-            <input id="filter" type="text" class="form-control" placeholder="Escribir acá...">
+            <input id="filter2" type="text" class="form-control" placeholder="Escribir acá...">
         </div>
         <div style="overflow: auto">
             <table id="tablaDiputados" class="table table-hover">
                 <thead>
                     <tr>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.indice)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lca_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.can_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_orden)</th>
@@ -105,6 +113,7 @@
                     @foreach (var obj in Model.Legisladores)
                     {
                         <tr>
+                            <td>@Html.DisplayFor(m => obj.indice)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_nombre)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_apellido)</td>
                             <td>@Html.DisplayFor(m => obj.tblistacargo.tblista.lis_descripcion)</td>
@@ -139,7 +148,7 @@
                         <th>Leg - 1Pais</th>
                     </tr>
                 </thead>
-                <tbody class="searchable">
+                <tbody class="searchable">                   
                     @foreach (var obj in Model.ListaVotosPorMesa)
                     {
                         <tr>
@@ -173,16 +182,18 @@
             <table id="tablaHorariosMesa" class="table table-hover">
                 <thead>
                     <tr>                        
+                        <th>#</th>
                         <th>Mesa</th>
                         <th>Fecha apertura</th>
                         <th>Fecha cierre</th>
                     </tr>
                 </thead>
                 <tbody class="searchable">
-                    @foreach (var obj in Model.ResultadoElectoral.ListaPlanillas)
+                    @foreach (var obj in Model.MesasAbiertasCerradas)
                     {
                         if (obj.pla_apertura != default(DateTime)) { 
                             <tr>
+                                <td>@Html.DisplayFor(m => obj.indice)</td>                                
                                 <td>@Html.DisplayFor(m => obj.mes_id)</td>                                
                                 <td>@Html.DisplayFor(m => obj.pla_apertura)</td>
                                 @if (obj.pla_cierre != default(DateTime)) { 
@@ -239,9 +250,16 @@
     <script type="text/javascript">
 
         function GetDatosComunaPorMesa(obj) {
-            var strMethodUrl = '@Url.Action("GetDatosComunaPorMesa", "ResultadoElectoral")'
+            var strMethodUrl = '@Url.Action("GetDatosComunaPorMesaBarra", "ResultadoElectoral")'
             $.getJSON(strMethodUrl, function (json) {
-                graficoBarrasMesasPorComunas(json);
+                graficoCantidadMesasAbiertasComuna(json);
+            });
+        }
+
+        function GetMesasAbiertas(obj) {
+            var strMethodUrl = '@Url.Action("GetMesasAbiertas", "ResultadoElectoral")'
+            $.getJSON(strMethodUrl, function (json) {
+                graficoBarrasMesasAbiertas(json);
             });
         }
 
@@ -260,19 +278,72 @@
                 graficoIngresoDiputados(json);
             });
         }
-
-        function CallDatosIngresoLesgiladores(obj) {
-            var strMethodUrl = '@Url.Action("armarDatosIngresoLegisladores", "ResultadoElectoral")'
-            $.getJSON(strMethodUrl, function (json) {
-                graficoIngresoLesgiladores(json);
-            });
-        }
                
         function CargaControles() {
             var obj;
             callDatosResultadoElectoral(obj);
-            callDatosIngresoDiputados(obj);            
+            callDatosIngresoDiputados(obj);
             GetDatosComunaPorMesa(obj);
+            GetMesasAbiertas(obj);
+        }
+
+        function graficoBarrasMesasAbiertas(obj) {
+            var ctxB = document.getElementById("MesasAbiertas").getContext('2d');
+            var myBarChart12 = new Chart(ctxB, {
+                type: 'bar',
+                data: {
+                    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                    datasets: [{
+                        label: 'Mesas abiertas por comuna',
+                        data: obj,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                scaleStartValue: 0,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         }
 
         function graficoBarras(obj) {
@@ -280,7 +351,7 @@
             var myBarChart1 = new Chart(ctxB, {
                 type: 'bar',
                 data: {
-                    labels: ["DIP_VM", "LEG_VM", "DIP_UP", "LEG_UP", "DIP_Ev", "LEG_Ev", "DIP_1P", "LEG_1P"],
+                    labels: ["DIP_VJ", "LEG_VJ", "DIP_UP", "LEG_UP", "DIP_Ev", "LEG_Ev", "DIP_1P", "LEG_1P"],
                     datasets: [{
                         label: '% de Votos',
                         data: obj,                        
@@ -323,14 +394,14 @@
 
         
 
-        function graficoBarrasMesasPorComunas(obj) {
+        function graficoCantidadMesasAbiertasComuna(obj) {
             var ctxB = document.getElementById("MesasPorComuna").getContext('2d');
             var myBarChart2 = new Chart(ctxB, {
                 type: 'bar',
                 data: {
                     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
                     datasets: [{
-                        label: 'Cantidad de mesas por comuna',
+                        label: 'Datos enviados por comuna',
                         data: obj,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
@@ -389,7 +460,7 @@
             var myBarChart3 = new Chart(ctxBB, {
                 type: 'bar',
                 data: {
-                    labels: ["DIP_VM", "DIP_UP", "DIP_Ev", "DIP_1P"],
+                    labels: ["DIP_VJ", "DIP_UP", "DIP_Ev", "DIP_1P"],
                     datasets: [{
                         label: 'Ingreso de DIPUTADOS',
                         data: obj,                                                
@@ -439,6 +510,16 @@
                 })
 
                 $('#filter2').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+                $('#filter3').keyup(function () {
 
                     var rex = new RegExp($(this).val(), 'i');
                     $('.searchable tr').hide();

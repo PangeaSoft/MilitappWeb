@@ -137,6 +137,7 @@
     <Compile Include="Models\DiputadosGanadoresModel.cs" />
     <Compile Include="Models\LegisladorGanadoresModel.cs" />
     <Compile Include="Models\PersonaModel.cs" />
+    <Compile Include="Models\PlanillasAbiertasCerradasModel.cs" />
     <Compile Include="Models\ResultadoElectoralModel.cs" />
     <Compile Include="Models\ResultadosGeneralesDiscriminadoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -70,6 +70,15 @@ namespace MilitappWeb.Entities.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #.
+        /// </summary>
+        public static string Indice {
+            get {
+                return ResourceManager.GetString("Indice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to APELLIDO.
         /// </summary>
         public static string LastName {

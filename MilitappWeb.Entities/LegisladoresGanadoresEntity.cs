@@ -8,6 +8,9 @@ namespace MilitappWeb.Entities
 {
     public class LegisladoresGanadoresEntity
     {
+        [Display(Name = "Indice", ResourceType = typeof(Resources.Ent_LegisladoresGanadores_Designer))]
+        public int indice { get; set; }
+
         [Display(Name = "FirstName", ResourceType = typeof(Resources.Ent_LegisladoresGanadores_Designer))]
         public int lca_id { get; set; }
         [Display(Name = "LastName", ResourceType = typeof(Resources.Ent_LegisladoresGanadores_Designer))]

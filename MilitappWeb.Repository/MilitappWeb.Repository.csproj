@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="DiputadosGanadoresRepository.cs" />
     <Compile Include="PersonaRepository.cs" />
+    <Compile Include="PlanillasAbiertasCerradasRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultadoElectoralRepository.cs" />
     <Compile Include="LegisladorGanadoresRepository.cs" />
