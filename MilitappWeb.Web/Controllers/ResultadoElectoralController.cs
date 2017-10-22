@@ -47,6 +47,23 @@ namespace MilitappWeb.Web.Controllers
             }
         }
 
+
+        public JsonResult GetDatosComunaPorMesa()
+        {
+            try
+            {
+                ResultadoElectoralBusiness resultadoElectoralBusiness = new ResultadoElectoralBusiness();
+                ResultadoElectoralModel obj = new ResultadoElectoralModel();
+                obj.ResultadoElectoral = (ResultadoElectoralEntity)JsonConvert.DeserializeObject(resultadoElectoralBusiness.GetList().ToString(), typeof(ResultadoElectoralEntity));
+                int[] datosBarras = resultadoElectoralBusiness.GetDatosComunaMesa(obj.ResultadoElectoral);
+                return Json(datosBarras, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         private decimal[] armarDatosIngresoDiputados(List<LegisladoresGanadoresEntity> obj)
         {
             List<decimal> resultados = new List<decimal>();

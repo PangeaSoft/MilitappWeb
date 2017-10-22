@@ -126,4 +126,10 @@
   <data name="votosPorFuerza" xml:space="preserve">
     <value>VOTOS POR MESA</value>
   </data>
+  <data name="FechaApertura" xml:space="preserve">
+    <value>Fecha de apertura</value>
+  </data>
+  <data name="FechaCierre" xml:space="preserve">
+    <value>Fecha de cierre</value>
+  </data>
 </root>
