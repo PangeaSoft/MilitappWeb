@@ -110,17 +110,37 @@ namespace MilitappWeb.Business
                     //obj.lca_id = elem2.lca_id;                                        
                     votosPorCadaLista.Add(elem2.res_cantidad_votos);                    
                 }
+                int aux = 0;
                 foreach (int votos in votosPorCadaLista)
                 {
-                    obj.lca1 = votos;
-                    obj.lca2 = votos;
-                    obj.lca3 = votos;
-                    obj.lca4 = votos;
-                    obj.lca5 = votos;
-                    obj.lca6 = votos;
-                    obj.lca7 = votos;
-                    obj.lca8 = votos;
-                }
+                    switch (aux){
+                        case 0:
+                            obj.lca1 = votos;
+                            break;
+                        case 1:
+                            obj.lca2 = votos;
+                            break;
+                        case 2:
+                            obj.lca3 = votos;
+                            break;
+                        case 3:
+                            obj.lca4 = votos;
+                            break;
+                        case 4:
+                            obj.lca5 = votos;
+                            break;
+                        case 5:
+                            obj.lca6 = votos;
+                            break;
+                        case 6:
+                            obj.lca7 = votos;
+                            break;
+                        default:
+                            obj.lca8 = votos;
+                            break;
+                    }
+                    aux++;
+                }                                    
                 obj.id = indice;
                 list.Add(obj);
                 indice++;
