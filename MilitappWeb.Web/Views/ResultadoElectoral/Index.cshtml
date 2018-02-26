@@ -11,7 +11,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     @*<title>@ViewBag.Title</title>*@
-    <title>Titulo</title>
+    <title>Elecciones Legislativas 2017</title>
 
     @Styles.Render("~/Mdb/css/font-awesome.min.css")
     @Styles.Render("~/Mdb/css/bootstrap.min.css")
@@ -40,12 +40,18 @@
                 <canvas id="IngresoDiputados"></canvas>
                 <br />
                 <br />
+                
+                <!--Grafico de barras-->
+                <canvas id="MesasPorComuna"></canvas>
+                <br />
+                <br />
 
                 <!--Grafico de barras-->
-                <canvas id="IngresoLegisladores"></canvas>
+                <canvas id="MesasAbiertas"></canvas>
                 <br />
                 <br />
 
+                
             </div>
             <div class="col-md-3"></div>
         </div>
@@ -62,6 +68,7 @@
             <table id="tablaDiputados" class="table table-hover">
                 <thead>
                     <tr>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.indice)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lca_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.can_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_orden)</th>
@@ -72,6 +79,7 @@
                     @foreach (var obj in Model.Diputados)
                     {
                         <tr>
+                            <td>@Html.DisplayFor(m => obj.indice)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_nombre)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_apellido)</td>
                             <td>@Html.DisplayFor(m => obj.tblistacargo.tblista.lis_descripcion)</td>
@@ -81,6 +89,7 @@
                 </tbody>
             </table>
         </div>
+        
 
         <!--Tabla-->
         <div class="input-group">
@@ -90,19 +99,21 @@
             <input id="filter2" type="text" class="form-control" placeholder="Escribir acá...">
         </div>
         <div style="overflow: auto">
-            <table id="tablaLegisladores" class="table table-hover">                
+            <table id="tablaDiputados" class="table table-hover">
                 <thead>
                     <tr>
+                        <th>@Html.DisplayNameFor(m => m.Funcionarios.indice)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lca_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.can_id)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_orden)</th>
                         <th>@Html.DisplayNameFor(m => m.Funcionarios.lcc_votos_correspondientes)</th>
                     </tr>
                 </thead>
-                <tbody class="searchable">
+                <tbody class="searchable">                    
                     @foreach (var obj in Model.Legisladores)
                     {
                         <tr>
+                            <td>@Html.DisplayFor(m => obj.indice)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_nombre)</td>
                             <td>@Html.DisplayFor(m => obj.tbcandidato.can_apellido)</td>
                             <td>@Html.DisplayFor(m => obj.tblistacargo.tblista.lis_descripcion)</td>
@@ -111,8 +122,8 @@
                     }
                 </tbody>
             </table>
-
         </div>
+
 
         <!--Tabla-->
         <div class="input-group">
@@ -125,19 +136,75 @@
             <table id="tablaVotosPorMesa" class="table table-hover">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>@Html.DisplayNameFor(m => m.votosPorMesa.mes_id)</th>
-                        <th>@Html.DisplayNameFor(m => m.votosPorMesa.lca_id)</th>
-                        <th>@Html.DisplayNameFor(m => m.votosPorMesa.pca_cantidad_votos)</th>                        
+                        <th>Dip - Vamos Juntos</th>
+                        <th>Leg - Vamos Juntos</th>
+                        <th>Dip - Unidad Porteña</th>
+                        <th>Leg - Unidad Porteña</th>
+                        <th>Dip - Evolucion Ciudadana</th>
+                        <th>Leg - Evolucion Ciudadana</th>
+                        <th>Dip - 1Pais</th>                                                                        
+                        <th>Leg - 1Pais</th>
                     </tr>
                 </thead>
-                <tbody class="searchable">
+                <tbody class="searchable">                   
                     @foreach (var obj in Model.ListaVotosPorMesa)
                     {
                         <tr>
+                            <td>@Html.DisplayFor(m => obj.id)</td>
                             <td>@Html.DisplayFor(m => obj.mes_id)</td>
-                            <td>@Html.DisplayFor(m => obj.nombreLista)</td>
-                            <td>@Html.DisplayFor(m => obj.pca_cantidad_votos)</td>                            
+                            <td>@Html.DisplayFor(m => obj.lca1)</td>
+                            <td>@Html.DisplayFor(m => obj.lca2)</td>
+                            <td>@Html.DisplayFor(m => obj.lca3)</td>
+                            <td>@Html.DisplayFor(m => obj.lca4)</td>
+                            <td>@Html.DisplayFor(m => obj.lca5)</td>
+                            <td>@Html.DisplayFor(m => obj.lca6)</td>
+                            <td>@Html.DisplayFor(m => obj.lca7)</td>
+                            <td>@Html.DisplayFor(m => obj.lca8)</td>                            
                         </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <!--Tabla-->
+        <div class="input-group">
+
+            <span class="input-group-addon">Buscar</span>
+
+            <input id="filter4" type="text" class="form-control" placeholder="Escribir acá...">
+        </div>
+        <div style="overflow: auto">
+            <table id="tablaHorariosMesa" class="table table-hover">
+                <thead>
+                    <tr>                        
+                        <th>#</th>
+                        <th>Mesa</th>
+                        <th>Fecha apertura</th>
+                        <th>Fecha cierre</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    @foreach (var obj in Model.MesasAbiertasCerradas)
+                    {
+                        if (obj.pla_apertura != default(DateTime)) { 
+                            <tr>
+                                <td>@Html.DisplayFor(m => obj.indice)</td>                                
+                                <td>@Html.DisplayFor(m => obj.mes_id)</td>                                
+                                <td>@Html.DisplayFor(m => obj.pla_apertura)</td>
+                                @if (obj.pla_cierre != default(DateTime)) { 
+                                    <td>@Html.DisplayFor(m => obj.pla_cierre)</td>                            
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -182,6 +249,27 @@
 
     <script type="text/javascript">
 
+        function GetDatosComunaPorMesa(obj) {
+            var strMethodUrl = '@Url.Action("GetDatosComunaPorMesaBarra", "ResultadoElectoral")'
+            $.getJSON(strMethodUrl, function (json) {
+                var totales = 0;
+                for (var i = 0; i < json.length; i++) {                    
+                    totales = totales + json[i];
+                }                
+                graficoCantidadMesasAbiertasComuna(json, totales);
+            });
+        }
+
+        function GetMesasAbiertas(obj) {
+            var strMethodUrl = '@Url.Action("GetMesasAbiertas", "ResultadoElectoral")'
+            $.getJSON(strMethodUrl, function (json) {
+                var totales = 0;
+                for (var i = 0; i < json.length; i++) {
+                    totales = totales + json[i];
+                }
+                graficoBarrasMesasAbiertas(json, totales);
+            });
+        }
 
 
         function callDatosResultadoElectoral(obj) {            
@@ -194,15 +282,16 @@
         
         function callDatosIngresoDiputados(obj) {
             var strMethodUrl = '@Url.Action("armarDatosIngresoDiputados", "ResultadoElectoral")'
-            $.getJSON(strMethodUrl, function (json) {
-                graficoIngresoDiputados(json);
-            });
-        }
-
-        function CallDatosIngresoLesgiladores(obj) {
-            var strMethodUrl = '@Url.Action("armarDatosIngresoLegisladores", "ResultadoElectoral")'
-            $.getJSON(strMethodUrl, function (json) {
-                graficoIngresoLesgiladores(json);
+            $.getJSON(strMethodUrl, function (json) {                
+                if (json[0] == 0) {
+                    for (var i = 0; i <= 3; i++) {
+                        json[i] = 0;                        
+                    }
+                    graficoIngresoDiputados(json);
+                }
+                else {
+                    graficoIngresoDiputados(json);
+                }
             });
         }
                
@@ -210,43 +299,58 @@
             var obj;
             callDatosResultadoElectoral(obj);
             callDatosIngresoDiputados(obj);
-            CallDatosIngresoLesgiladores(obj);                             
+            GetDatosComunaPorMesa(obj);
+            GetMesasAbiertas(obj);
         }
 
-        function graficoBarras(obj) {
-            var ctxB = document.getElementById("ResultadoElectoral").getContext('2d');
-            var myBarChart = new Chart(ctxB, {
+        function graficoBarrasMesasAbiertas(obj, totales) {
+            var ctxB = document.getElementById("MesasAbiertas").getContext('2d');
+            var myBarChart12 = new Chart(ctxB, {
                 type: 'bar',
                 data: {
-                    labels: ["DIP_VM", "LEG_VM", "DIP_UP", "LEG_UP", "DIP_Ev", "LEG_Ev", "DIP_1P", "LEG_1P"],
+                    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
                     datasets: [{
-                        label: '% de Votos',
-                        data: obj,                        
+                        label: 'Mesas abiertas por comuna: ' + totales,
+                        data: obj,
                         backgroundColor: [
-                            'rgba(54, 162, 235, 0.2)',
                             'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
                             'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
                             'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
                             'rgba(255, 99, 132, 0.2)',
                         ],
                         borderColor: [
-                            'rgba(54, 162, 235, 1)',
                             'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
                             'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
                             'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
                             'rgba(255, 99, 132, 1)',
                         ],
                         borderWidth: 1
                     }]
                 },
-                scaleStartValue : 0,
-                optionss: {
+                scaleStartValue: 0,
+                options: {
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -257,28 +361,35 @@
                 }
             });
         }
-        
 
-        function graficoIngresoLesgiladores(obj) {
-            var ctxB = document.getElementById("IngresoLegisladores").getContext('2d');
+        function graficoBarras(obj) {
+            var ctxB = document.getElementById("ResultadoElectoral").getContext('2d');
             var myBarChart1 = new Chart(ctxB, {
                 type: 'bar',
                 data: {
-                    labels: ["LEG_VM", "LEG_UP", "LEG_Ev", "LEG_1P"],
+                    labels: ["DIP_VJ", "LEG_VJ", "DIP_UP", "LEG_UP", "DIP_Ev", "LEG_Ev", "DIP_1P", "LEG_1P"],
                     datasets: [{
-                        label: 'Ingreso de LEGISLADORES',
-                        data: obj,                                                
+                        label: '% de Votos',
+                        data: obj,                        
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 255, 0, 0.2)',
+                            'rgba(255, 255, 55, 0.2)',                            
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(61, 241, 245, 0.2)',
+                            'rgba(0, 204, 0, 0.2)',
+                            'rgba(125, 251, 55, 0.2)',                            
+                            'rgba(51, 51, 51, 0.2)',
+                            'rgba(178, 178, 178, 0.2)',
                         ],
                         borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 255, 0, 1)',
+                            'rgba(255, 255, 55, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(61, 241, 245, 1)',
+                            'rgba(0, 204, 0, 1)',
+                            'rgba(125, 251, 55, 1)',
+                            'rgba(51, 51, 51, 1)',
+                            'rgba(178, 178, 178, 1)',
                         ],
                         borderWidth: 1
                     }]
@@ -296,27 +407,90 @@
             });
         }
         
+
+        
+
+        function graficoCantidadMesasAbiertasComuna(obj, total) {
+            var ctxB = document.getElementById("MesasPorComuna").getContext('2d');
+            var myBarChart2 = new Chart(ctxB, {
+                type: 'bar',                
+                data: {
+                    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
+                    datasets: [{
+                        label: 'Resultados enviados por comuna: '+ total,
+                        data: obj,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                scaleStartValue: 0,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        
         
         function graficoIngresoDiputados(obj) {
             var ctxBB = document.getElementById("IngresoDiputados").getContext('2d');
-            var myBarChart = new Chart(ctxBB, {
+            var myBarChart3 = new Chart(ctxBB, {
                 type: 'bar',
                 data: {
-                    labels: ["DIP_VM", "DIP_UP", "DIP_Ev", "DIP_1P"],
+                    labels: ["DIP_VJ", "DIP_UP", "DIP_Ev", "DIP_1P"],
                     datasets: [{
                         label: 'Ingreso de DIPUTADOS',
                         data: obj,                                                
                         backgroundColor: [
+                            'rgba(255, 255, 0, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(0, 204, 0, 0.2)',
+                            'rgba(51, 51, 51, 0.2)',
                         ],
                         borderColor: [
+                            'rgba(255, 255, 0, 1)',
                             'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
+                            'rgba(0, 204, 0, 1)',
+                            'rgba(51, 51, 51, 1)',
                         ],
                         borderWidth: 1
                     }]
@@ -352,6 +526,26 @@
                 })
 
                 $('#filter2').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+                $('#filter3').keyup(function () {
+
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.searchable tr').hide();
+                    $('.searchable tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+
+                })
+
+                $('#filter4').keyup(function () {
 
                     var rex = new RegExp($(this).val(), 'i');
                     $('.searchable tr').hide();

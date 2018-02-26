@@ -19,6 +19,7 @@ namespace MilitappWeb.Web.Controllers
         public ActionResult Index()
         {
             ResultadoElectoralBusiness resultadoElectoralBusiness = new ResultadoElectoralBusiness();
+            PlanillasAbiertasCerradasBusiness planillasAbiertasCerradasBusiness = new PlanillasAbiertasCerradasBusiness();
             DiputadosGanadoresBusiness diputadosGanadoresBusiness = new DiputadosGanadoresBusiness();
             LegisladorGanadoresBusiness legisladorGanadoresBusiness = new LegisladorGanadoresBusiness();
             ResultadosGeneralesDiscriminadoModel model = new ResultadosGeneralesDiscriminadoModel();            
@@ -26,11 +27,40 @@ namespace MilitappWeb.Web.Controllers
             model.Diputados = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(diputadosGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));
             model.Legisladores = (List<LegisladoresGanadoresEntity>)JsonConvert.DeserializeObject(legisladorGanadoresBusiness.GetList().ToString(), typeof(List<LegisladoresGanadoresEntity>));
             model.ListaVotosPorMesa = resultadoElectoralBusiness.GetListVotosPorMesa(model.ResultadoElectoral, model.Diputados, model.Legisladores);
+            model.MesasAbiertasCerradas = (List<PlanillasAbiertasCerradasEntity>)JsonConvert.DeserializeObject(planillasAbiertasCerradasBusiness.GetList().ToString(), typeof(List<PlanillasAbiertasCerradasEntity>));            
+            SetIndiceMesas(model.MesasAbiertasCerradas, model.MesasAbiertasCerradas.Count);
+            SetIndicesFuncionarios(model.Legisladores, 30);
+            SetIndicesFuncionarios(model.Diputados, 13);
             return View(model);            
         }
 
+        private void SetIndicesFuncionarios(List<LegisladoresGanadoresEntity> list, int tope)
+        {
+            int indice = 1;
+            foreach (LegisladoresGanadoresEntity elem in list)
+            {
+                elem.indice = indice;
+                indice++;
+            }
+        }
+        private void SetIndiceMesas(List<PlanillasAbiertasCerradasEntity> list, int tope)
+        {
+            int indice = 1;
+            foreach (PlanillasAbiertasCerradasEntity elem in list){
+                elem.indice = indice;
+                indice++;
+            }                                    
+        }
 
-                        
+        public JsonResult GetMesasAbiertas()
+        {
+            PlanillasAbiertasCerradasBusiness planillasAbiertasCerradasBusiness = new PlanillasAbiertasCerradasBusiness();
+            PlanillasAbiertasCerradasModel model = new PlanillasAbiertasCerradasModel();
+            model.ListPlanillasAbiertasCerradas = (List<PlanillasAbiertasCerradasEntity>)JsonConvert.DeserializeObject(planillasAbiertasCerradasBusiness.GetList().ToString(), typeof(List<PlanillasAbiertasCerradasEntity>));
+            int[] datosBarras = planillasAbiertasCerradasBusiness.datosGraficoBarra(model.ListPlanillasAbiertasCerradas);
+            return Json(datosBarras, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult armarDatosGraficoBarras()
         {
             try
@@ -39,6 +69,34 @@ namespace MilitappWeb.Web.Controllers
                 ResultadoElectoralModel obj = new ResultadoElectoralModel();
                 obj.ResultadoElectoral = (ResultadoElectoralEntity)JsonConvert.DeserializeObject(resultadoElectoralBusiness.GetList().ToString(), typeof(ResultadoElectoralEntity));
                 Double[] datosBarras = resultadoElectoralBusiness.datosGraficoBarra(obj.ResultadoElectoral);
+                Double sumaDeValores = 0;
+                for (int i = 0; i < datosBarras.Count(); i++)
+                {
+                    if (Double.IsNaN(datosBarras[i]))
+                        sumaDeValores = sumaDeValores + 1;
+                }
+                if (sumaDeValores == datosBarras.Count())
+                {
+                    for (int i = 0; i < datosBarras.Count(); i++)
+                        datosBarras[i] = 0;
+                }
+                return Json(datosBarras, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
+        public JsonResult GetDatosComunaPorMesaBarra()
+        {
+            try
+            {
+                ResultadoElectoralBusiness resultadoElectoralBusiness = new ResultadoElectoralBusiness();
+                ResultadoElectoralModel obj = new ResultadoElectoralModel();
+                obj.ResultadoElectoral = (ResultadoElectoralEntity)JsonConvert.DeserializeObject(resultadoElectoralBusiness.GetList().ToString(), typeof(ResultadoElectoralEntity));
+                int[] datosBarras = resultadoElectoralBusiness.GetDatosComunaMesa(obj.ResultadoElectoral);
                 return Json(datosBarras, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -53,10 +111,15 @@ namespace MilitappWeb.Web.Controllers
             decimal[] res = new decimal[4];
             foreach (LegisladoresGanadoresEntity elem in obj)
             {
+                if (elem.lcc_votos_correspondientes == 0)
+                {
+                    for (int i = 0; i <= 3; i++ )
+                        res[i] = 0;
+                    break;
+                }
                 res[elem.tblistacargo.lis_id - 1] = res[elem.tblistacargo.lis_id - 1] + 1;
                 resultados.Add(elem.lcc_votos_correspondientes);
-            }
-            //return resultados.ToArray();
+            }            
             return res;
         }
 

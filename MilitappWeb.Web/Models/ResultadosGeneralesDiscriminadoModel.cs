@@ -15,5 +15,6 @@ namespace MilitappWeb.Web.Models
         public List<LegisladoresGanadoresEntity> Diputados;
         public List<VotosPorMesaEntity> ListaVotosPorMesa;
         public VotosPorMesaEntity votosPorMesa;
+        public List<PlanillasAbiertasCerradasEntity> MesasAbiertasCerradas;        
     }
 }

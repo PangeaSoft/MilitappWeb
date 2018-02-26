@@ -14,6 +14,11 @@ namespace MilitappWeb.Entities
         [Display(Name = "Mesa", ResourceType = typeof(Resources.Ent_VotosPorMesaEntity_Designer))]
         public int mes_id { get; set; }
         public int fis_id { get; set; }
+
+        [Display(Name = "FechaApertura", ResourceType = typeof(Resources.Ent_VotosPorMesaEntity_Designer))]
+        public DateTime pla_apertura { get; set; }
+        [Display(Name = "FechaCierre", ResourceType = typeof(Resources.Ent_VotosPorMesaEntity_Designer))]
+        public DateTime pla_cierre { get; set; }
         public int pla_electores { get; set; }
         public int pla_sobres { get; set; }
         public List<TbplanillaCargoEntity> tbplanillacargo { get; set; }

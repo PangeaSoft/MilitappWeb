@@ -47,6 +47,7 @@
     <Compile Include="LegisladoresGanadoresEntity.cs" />
     <Compile Include="PersonaEntity.cs" />
     <Compile Include="PlanillaEntity.cs" />
+    <Compile Include="PlanillasAbiertasCerradasEntity.cs" />
     <Compile Include="PorcentajeResultadoDiputadosEntity.cs" />
     <Compile Include="PorcentajeResultadoLegisladoresEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

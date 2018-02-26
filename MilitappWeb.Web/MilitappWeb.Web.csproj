@@ -137,6 +137,7 @@
     <Compile Include="Models\DiputadosGanadoresModel.cs" />
     <Compile Include="Models\LegisladorGanadoresModel.cs" />
     <Compile Include="Models\PersonaModel.cs" />
+    <Compile Include="Models\PlanillasAbiertasCerradasModel.cs" />
     <Compile Include="Models\ResultadoElectoralModel.cs" />
     <Compile Include="Models\ResultadosGeneralesDiscriminadoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -285,6 +286,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResultadoElectoral.Designer.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\MilitappWeb.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

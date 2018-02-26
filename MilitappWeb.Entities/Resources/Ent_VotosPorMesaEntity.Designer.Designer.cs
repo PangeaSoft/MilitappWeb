@@ -61,6 +61,24 @@ namespace MilitappWeb.Entities.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fecha de apertura.
+        /// </summary>
+        public static string FechaApertura {
+            get {
+                return ResourceManager.GetString("FechaApertura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha de cierre.
+        /// </summary>
+        public static string FechaCierre {
+            get {
+                return ResourceManager.GetString("FechaCierre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LISTA.
         /// </summary>
         public static string listaCandidato {
